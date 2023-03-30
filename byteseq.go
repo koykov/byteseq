@@ -43,12 +43,12 @@ func SequenceToBytes[T Byteseq](x T) []byte {
 	}
 }
 
-// Q2S is a shorthand alias of SequenceToString().
-func Q2S[T Byteseq](x T) string {
-	return SequenceToString(x)
+// StringToSequence makes fast conversion of string to sequence.
+func StringToSequence[T Byteseq](s string) T {
+	return *(*T)(unsafe.Pointer(&s))
 }
 
-// Q2B is a shorthand alias of SequenceToBytes().
-func Q2B[T Byteseq](x T) []byte {
-	return SequenceToBytes(x)
+// BytesToSequence makes fast conversion of bytes to sequence.
+func BytesToSequence[T Byteseq](p []byte) T {
+	return *(*T)(unsafe.Pointer(&p))
 }
