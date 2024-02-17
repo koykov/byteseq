@@ -52,3 +52,15 @@ func StringToSequence[T Byteseq](s string) T {
 func BytesToSequence[T Byteseq](p []byte) T {
 	return *(*T)(unsafe.Pointer(&p))
 }
+
+// ToBytes tries to convert x to bytes.
+func ToBytes[T Byteseq](x T) (p []byte, ok bool) {
+	p, ok = any(x).([]byte)
+	return
+}
+
+// ToString tries to convert x to string.
+func ToString[T Byteseq](x T) (s string, ok bool) {
+	s, ok = any(x).(string)
+	return
+}
