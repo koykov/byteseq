@@ -1,7 +1,6 @@
 package byteseq
 
 import (
-	"reflect"
 	"unsafe"
 )
 
@@ -30,8 +29,8 @@ func SequenceToBytes[T Byteseq](x T) []byte {
 	switch ix.(type) {
 	case string:
 		s := ix.(string)
-		sh := (*reflect.StringHeader)(unsafe.Pointer(&s))
-		var h reflect.SliceHeader
+		sh := (*sheader)(unsafe.Pointer(&s))
+		var h header
 		h.Data = sh.Data
 		h.Len = sh.Len
 		h.Cap = sh.Len
