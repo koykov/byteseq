@@ -12,12 +12,11 @@ type Byteseq interface {
 // SequenceToString makes fast conversion of sequence to string.
 func SequenceToString[T Byteseq](x T) string {
 	ix := any(x)
-	switch ix.(type) {
+	switch y := ix.(type) {
 	case string:
-		return ix.(string)
+		return y
 	case []byte:
-		p := ix.([]byte)
-		return *(*string)(unsafe.Pointer(&p))
+		return *(*string)(unsafe.Pointer(&y))
 	default:
 		return ""
 	}
@@ -26,17 +25,16 @@ func SequenceToString[T Byteseq](x T) string {
 // SequenceToBytes makes fast conversion of sequence to bytes.
 func SequenceToBytes[T Byteseq](x T) []byte {
 	ix := any(x)
-	switch ix.(type) {
+	switch y := ix.(type) {
 	case string:
-		s := ix.(string)
-		sh := (*sheader)(unsafe.Pointer(&s))
+		sh := (*sheader)(unsafe.Pointer(&y))
 		var h header
 		h.Data = sh.Data
 		h.Len = sh.Len
 		h.Cap = sh.Len
 		return *(*[]byte)(unsafe.Pointer(&h))
 	case []byte:
-		return ix.([]byte)
+		return y
 	default:
 		return nil
 	}
